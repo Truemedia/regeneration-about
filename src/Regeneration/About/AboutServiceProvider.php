@@ -1,6 +1,6 @@
 <?php namespace Regeneration\About;
-
 use Illuminate\Support\ServiceProvider;
+use App\Artisan\InstallCommand;
 
 class AboutServiceProvider extends ServiceProvider {
 
@@ -18,8 +18,9 @@ class AboutServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		include __DIR__ . '/../../routes.php';
-		$this->package('regeneration/about');
+		$dir = __DIR__ . '/../../';
+
+		$this->setupResources($dir);
 	}
 
 	/**
@@ -29,8 +30,46 @@ class AboutServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		//
+		// Register commands
+		$this->registerCommands();
+
+		// List of commands
+        $this->commands( array('install') );
 	}
+
+	/**
+	 * Register all commands available in the package
+	 *
+	 * @return void
+	 */
+	private function registerCommands()
+    {
+        $this->app['install'] = $this->app->share(function($app)
+        {
+            return new InstallCommand;
+        });
+    }
+
+    /**
+     * Setup routing, configs, and views
+     */
+    private function setupResources($dir)
+    {
+		// Include routes
+		include $dir . 'routes.php';
+
+		// Set directory
+		$this->loadViewsFrom($dir . 'views', 'About');
+
+		// Set config
+        $config = $dir . 'config' . DIRECTORY_SEPARATOR . 'app.php';
+        $this->mergeConfigFrom($config, 'app');
+
+        $this->publishes([
+		    realpath($dir . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'migrations') => $this->app->databasePath() . DIRECTORY_SEPARATOR . 'migrations',
+		    realpath($dir . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'seeds') => $this->app->databasePath() . DIRECTORY_SEPARATOR . 'seeds',
+		]);
+    }
 
 	/**
 	 * Get the services provided by the provider.

@@ -12,3 +12,4 @@
 */
 
 Route::resource('about/manage', 'Regeneration\About\Controllers\AdminController');
+Route::get('about/install', 'Regeneration\About\Controllers\AdminController@install');
