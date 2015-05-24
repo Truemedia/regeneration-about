@@ -59,7 +59,7 @@ class AboutServiceProvider extends ServiceProvider {
 		include $dir . 'routes.php';
 
 		// Set directory
-		$this->loadViewsFrom($dir . 'views', 'About');
+		$this->loadViewsFrom($dir . 'views', 'about');
 
 		// Set config
         $config = $dir . 'config' . DIRECTORY_SEPARATOR . 'app.php';
