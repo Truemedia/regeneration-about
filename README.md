@@ -1,19 +1,42 @@
-# regeneration-about
-About package for regeneration
+## Regeneration - About package ##
 
-== CLI commands for this package ==
-1) Run the following command in the root directory of your laravel installation:
-php artisan controller:make NewController --bench=regeneration/about
+Simple Laravel 5 package for managing content for an **About Us** page.
 
-2) Add the following line after the first php opening tag of the newly generated file inside the packages `controller` folder
-namespace Regeneration\About\Controllers;
+### Installation ###
 
-3) Run the following command in the root directory and your package directory
-composer dump-autoload
+Install via [composer](http://getcomposer.org) in the root directory of a Laravel 5 application
 
-=== Accessing admin area ===
-Admin controller is restful, therefore has following pages available:
-/about/manage/ 
-/about/manage/create
-/about/manage/{lobby_id}
-/about/manage/{lobby_id}/edit
+    composer require regeneration/about:dev-master
+
+Add the following line to `config/app.php` inside the 'providers' array to use the service provider
+
+	'Regeneration\About\AboutServiceProvider',
+
+Update composer
+
+	composer update
+
+Run the package install command
+
+	php artisan about:install
+
+### Usage ###
+
+This package has several pages with many features
+
+Give them a try (URLs):
+
+- `/about`
+- `/about/manage`
+
+### Overview ###
+
+General gist
+
+### Tools ###
+
+List of tools, everything needed to develop.
+
+### Credits ###
+
+All thanks to me and the community
